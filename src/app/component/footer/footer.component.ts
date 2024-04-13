@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 @Component({
   selector: 'lab-footer',
@@ -7,8 +7,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   template: `
     <footer>
       <nav>
-        <a [href]="author.homepage" target="_blank">© {{ year }} {{ author.name }}</a>
-        <button (click)="onAcceptClick()">Accept Cookies</button>
+        <span>
+          <a [href]="author.homepage" target="_blank"> © {{ year }} {{ author.name }} </a>
+        </span>
+        <span>
+          @if (cookiesAccepted()) {
+            <small>🍪</small>
+          } @else {
+            <button (click)="onCookiesAccepted()" class="secondary outline">Accept Cookies</button>
+          }
+        </span>
       </nav>
     </footer>
   `,
@@ -16,13 +24,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  author = {
-    name: 'Ignacio Vivas',
+  readonly author = {
+    name: 'Alberto Basalo.',
     homepage: 'https://albertobasalo.dev',
   };
 
-  year = new Date().getFullYear();
-  onAcceptClick() {
-    console.log('¡Cookies Aceptadas!');
+  readonly year = new Date().getFullYear();
+
+  cookiesAccepted = signal(false);
+
+  onCookiesAccepted() {
+    console.log('Cookies accepted');
+    this.cookiesAccepted.set(true);
   }
 }

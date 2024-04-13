@@ -11,7 +11,7 @@ import { BookingsComponent } from './bookings/bookings.component';
   imports: [RouterOutlet, HeaderComponent, FooterComponent, CommonModule, BookingsComponent],
   template: `
     <lab-header />
-    <lab-bookings />
+
 
     <router-outlet></router-outlet>
     <lab-footer />
